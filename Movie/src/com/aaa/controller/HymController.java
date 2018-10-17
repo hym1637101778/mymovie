@@ -24,8 +24,8 @@ public class HymController {
 	/* 进入首页查询电影 */
 	@RequestMapping("/hhome")
 	public String loginHhome() {
-		List<Map> fileList = hs.findAllFilm();
-		System.out.println(fileList);
+		// List<Map> fileList = hs.findAllFilm();
+		// System.out.println(fileList);
 		return "hhome";
 	}
 
