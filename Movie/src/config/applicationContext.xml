@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	<context:component-scan base-package="com.aaa"/>
+	<bean id="badss" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+		<property name="username" value="scott"/>
+		<property name="password" value="root"/>
+		<property name="initialSize" value="4"/>
+		<property name="maxIdle" value="4"/> 
+		<property name="maxTotal" value="20"/>
+	</bean>
+ 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+ 		<property name="dataSource" ref="badss"/>
+ 		<property name="mapperLocations" value="classpath:com/aaa/batis/*.xml"/>
+ 	</bean>	
+ 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+ 		<property name="basePackage" value="com.aaa.dao"/>
+ 	</bean>
+ 	<!-- 用于文件的解析 -->
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 	</bean>
+ 	<!-- 注解 -->
+ 	 <tx:annotation-driven/>
+	 <!-- 定时任务的注解 -->
+	 <task:annotation-driven/>
+</beans>
